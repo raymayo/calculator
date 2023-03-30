@@ -1,118 +1,160 @@
 const numbers = document.getElementsByClassName('numbers');
 const operators = document.getElementsByClassName('operators');
-const mainDisplay = document.getElementById('mainDisplay');
-const upperDisplay = document.getElementById('upperDisplay');
 const inputStore = document.getElementsByClassName('inputStore');
-const equalSign = document.getElementById('equal');
-const clearBtn = document.getElementById('clear');
-const deleteBtn = document.getElementById('delete');
-const decimal = document.getElementById('decimal')
+
+const decimal = document.getElementById('decimal');
 
 let numList = [];
 let usedOperator;
 
 for (const num of numbers) {
-    
-    num.addEventListener('click', ()=>{
-        mainDisplay.textContent += num.textContent
-
-    })
+	num.addEventListener('click', () => {
+		mainDisplay.textContent += num.textContent;
+	});
 }
 
 let checkInput = '';
 
 for (const input of inputStore) {
-    input.addEventListener('click', ()=>{
-        checkInput += input.textContent
+	input.addEventListener('click', () => {
+		checkInput += input.textContent;
 
-        if (checkInput === '0/0') {
-            alert('cant divide by 0');
-            mainDisplay.textContent = '';
-            upperDisplay.textContent = '';
-            numList = [];
-            return;
-        }
-    })
+		if (checkInput === '0/0') {
+			alert('cant divide by 0');
+			mainDisplay.textContent = '';
+			upperDisplay.textContent = '';
+			numList = [];
+			return;
+		}
+	});
 }
-
 
 for (const op of operators) {
-    op.addEventListener('click',()=>{
-
-        if(mainDisplay.textContent === ''){
-            alert('Type a number first')
-            return;
-        }
-        let newNum = parseFloat(mainDisplay.textContent)
-        numList.push(newNum)
-        upperDisplay.textContent = mainDisplay.textContent
-        upperDisplay.textContent += op.textContent
-        Operations()
-        usedOperator = op.textContent
-        // Operations()
-        mainDisplay.textContent = ''
-        decimalPresent = false;
-
-    })
+	op.addEventListener('click', () => {
+		if (mainDisplay.textContent === '') {
+			alert('Type a number first');
+			return;
+		}
+		let newNum = parseFloat(mainDisplay.textContent);
+		numList.push(newNum);
+		upperDisplay.textContent = mainDisplay.textContent;
+		// upperDisplay.textContent += op.textContent;
+		usedOperator = op.textContent;
+        Operations();
+		mainDisplay.textContent = '';
+		decimalPresent = false;
+	});
 }
 
+equal.addEventListener('click', solveProb);
 
-
-equalSign.addEventListener('click', ()=>{
-    if (isNaN(mainDisplay.textContent || upperDisplay.textContent) === true || mainDisplay.textContent === '' || numList.length < 1){
-        return;
-    }
-    upperDisplay.textContent += mainDisplay.textContent
-    let newNum = parseFloat(mainDisplay.textContent)
-    numList.push(newNum)
-    Operations()
-    mainDisplay.textContent = numList[0]
-    numList = [];
-    decimalPresent = false;
-})
-
-
-
-
-
-function Operations(){
-    switch (usedOperator) {
-        case '+':
-            numList = [Math.round(numList.reduce((accumulator, number) => accumulator + number) * 100) / 100];
-            break;
-        case '-':
-            numList = [Math.round(numList.reduce((accumulator, number) => accumulator - number) * 100) / 100];
-            break;
-        case 'x':
-            numList = [Math.round(numList.reduce((accumulator, number) => accumulator * number) * 100) / 100];
-            break;
-
-        case '/':
-            numList = [Math.round(numList.reduce((accumulator, number) => accumulator / number)*100)/100];
-            break;
-    }
+function solveProb() {
+	if (
+		isNaN(mainDisplay.textContent || upperDisplay.textContent) === true ||
+		mainDisplay.textContent === '' ||
+		numList.length < 1
+	) {
+		return;
+	}
+	upperDisplay.textContent += mainDisplay.textContent;
+	let newNum = parseFloat(mainDisplay.textContent);
+	numList.push(newNum);
+	Operations();
+	mainDisplay.textContent = numList[0];
+	numList = [];
+	decimalPresent = false;
+	checkInput = '';
+	upperDisplay.textContent = '';
 }
 
-clearBtn.addEventListener('click', ()=>{
-    mainDisplay.textContent = '';
-    upperDisplay.textContent = '';
-    numList = []
-    decimalPresent = false;
-})
+//OPERATORS
+function Operations() {
+    console.log(upperDisplay)
+	switch (usedOperator) {
+		case '+':
+			numList = [Math.round(numList.reduce((a, b) => a + b) * 100) / 100];
+			if (upperDisplay !== '') {
+				upperDisplay.textContent = [
+					Math.round(numList.reduce((a, b) => a + b) * 100) / 100,
+				];
+                upperDisplay.textContent += ' +'
+			}
+			break;
+		case '-':
+			numList = [Math.round(numList.reduce((a, b) => a - b) * 100) / 100];
+			if (upperDisplay !== '') {
+				upperDisplay.textContent = numList = [
+					Math.round(numList.reduce((a, b) => a - b) * 100) / 100,
+				];
+                upperDisplay.textContent += ' -'
+			}
+			break;
+		case '🞩':
+			numList = [Math.round(numList.reduce((a, b) => a * b) * 100) / 100];
+			if (upperDisplay !== '') {
+				upperDisplay.textContent = [
+					Math.round(numList.reduce((a, b) => a * b) * 100) / 100,
+				];
+                upperDisplay.textContent += ' 🞩'
+			}
+			break;
 
-deleteBtn.addEventListener('click', ()=>{
-    if (mainDisplay.textContent === ''){
-        return;
-    }
-    mainDisplay.textContent = mainDisplay.textContent.slice(0, -1)
-})
+		case '÷':
+			numList = [Math.round(numList.reduce((a, b) => a / b) * 100) / 100];
+			if (upperDisplay !== '') {
+				upperDisplay.textContent = [
+					Math.round(numList.reduce((a, b) => a / b) * 100) / 100,
+				];
+                upperDisplay.textContent += ' ÷'
+			}
+			break;
+	}
+}
+
+//CLEAR LINES
+clearBtn.addEventListener('click', () => {
+	checkInput = '';
+	mainDisplay.textContent = '';
+	upperDisplay.textContent = '';
+    console.log(upperDisplay)
+	numList = [];
+	decimalPresent = false;
+});
+
+//DELETE NUMBERS
+deleteBtn.addEventListener('click', () => {
+	if (mainDisplay.textContent === '') {
+		return;
+	}
+	mainDisplay.textContent = mainDisplay.textContent.slice(0, -1);
+});
 
 let decimalPresent = false;
 
-decimal.addEventListener('click', ()=>{
-    if(decimalPresent === true){
-        return;
-    }
-    decimalPresent = true;
-    mainDisplay.textContent += '.'
+//DECIMAL Operator
+decimal.addEventListener('click', () => {
+	if (decimalPresent === true) {
+		return;
+	}
+	decimalPresent = true;
+	mainDisplay.textContent += '.';
+});
+
+const allButton = document.querySelectorAll('.button')
+
+
+
+allButton.forEach(button =>{
+    button.addEventListener('click', e =>{
+        gsap.fromTo(e.target, {scale:.6, ease:'expo.out'}, {scale:1, ease:'expo.out'})
+    })
+
+    button.addEventListener('pointerenter', e =>{
+        gsap.to(e.target, {border: 'solid 1px #C69F68' , ease:'expo.out'})
+    })
+
+    button.addEventListener('pointerleave', e =>{
+        gsap.to(e.target, {border: 'none' , ease:'expo.out'})
+    })
+    
 })
