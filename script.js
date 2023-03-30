@@ -146,15 +146,31 @@ const allButton = document.querySelectorAll('.button')
 
 allButton.forEach(button =>{
     button.addEventListener('click', e =>{
-        gsap.fromTo(e.target, {scale:.6, ease:'expo.out'}, {scale:1, ease:'expo.out'})
+        gsap.fromTo(e.target, {scale:.8, ease:'expo.out'}, {scale:1, ease:'expo.out'})
     })
 
     button.addEventListener('pointerenter', e =>{
-        gsap.to(e.target, {border: 'solid 1px #C69F68' , ease:'expo.out'})
+        gsap.to(e.target, {outline: 'solid 1px #C69F68' , ease:'expo.out'})
     })
 
     button.addEventListener('pointerleave', e =>{
-        gsap.to(e.target, {border: 'none' , ease:'expo.out'})
+        gsap.to(e.target, {outline: 'none' , ease:'expo.out'})
     })
     
 })
+
+github.addEventListener('pointerenter', () => {
+	gsap.fromTo(
+		github,
+		{ rotate: 0, ease: 'expo.inout' },
+		{ rotate: 360, ease: 'expo.inout' }
+	);
+});
+
+github.addEventListener('pointerleave', () => {
+	gsap.fromTo(
+		github,
+		{ rotate: 360, ease: 'expo.inout' },
+		{ rotate: 0, ease: 'expo.inout' }
+	);
+});

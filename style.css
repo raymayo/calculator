@@ -5,6 +5,7 @@
     box-sizing: border-box;
 }
 
+
 #numberGrid,
 body,
 main {
@@ -33,13 +34,13 @@ body {
     display: grid;
     width: 100vw;
     max-width: 100rem;
-    height: 100vh;
+    height: 90vh;
     width: -moz-available;
     width: -webkit-fill-available;
     width: fill-available;
-    margin:  auto;
+    margin: 5vh auto;
     padding: 5%;
-    background-color: #0F141B;
+    background-color: #1E242C;
 }
 
 main > *{
@@ -49,7 +50,6 @@ main > *{
 main {
     text-align: center;
     grid-template-rows: repeat(3, 1fr);
-    background-color: #191F28;
     border-radius: 1rem;
 }
 
@@ -70,7 +70,9 @@ main {
     grid-row-end: 4;
     gap: 10px;
     padding: 5%;
-    border-radius: 1rem ;
+    border-radius: 0 0 1rem 1rem ;
+    background-color: #191F28;
+
 }
 
 
@@ -103,7 +105,6 @@ main {
 .numbers, .options, .operators, .misc{
     background-color: #141A22;
     color: #CCCCB5;
-    font-size: 1.5rem;
     border-radius: .5rem ;
     cursor: pointer;
 }
@@ -113,6 +114,8 @@ button{
     place-items: center;
     border: none;
     box-sizing: border-box;
+    font-size: clamp(1.50rem, calc(1.33rem + 0.87vw), 2.00rem);
+    padding: clamp(0.00rem, calc(-0.17rem + 0.87vw), 0.30rem);
 }
 
 #mainDisplay{
@@ -124,4 +127,26 @@ button{
 
     font-size: 2.5rem;
     padding-bottom: 1rem;
+}
+
+.operators{
+    background-color: #C69F68;
+    color: #141A22;
+}
+
+
+.options{
+    color:#C69F68;
+}
+
+footer{
+    font-size: clamp(1.00rem, calc(0.83rem + 0.87vw), 1.50rem);
+    text-align: center;
+    color: #CCCCB5; 
+    transform: translate(0, 2.5rem);
+}
+
+a {
+    text-decoration: none;
+    color: #C69F68;
 }
